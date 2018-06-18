@@ -32,8 +32,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-mail')
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-	compile('mysql:mysql-connector-java')
-	//compile('org.postgresql:postgresql')
+	//compile('mysql:mysql-connector-java')
+	compile('org.postgresql:postgresql')
 	compile('org.springframework.boot:spring-boot-starter-mail:2.0.2.RELEASE')
 	compile('com.google.code.gson:gson:2.8.2')
 
