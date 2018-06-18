@@ -46,7 +46,7 @@ public class TaskControllerTest {
         when(taskMapper.mapToTaskDtoList(service.getAllTasks())).thenReturn(taskDtos);
 
         //When&Then
-        mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/tasks").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is(1)))
@@ -63,7 +63,7 @@ public class TaskControllerTest {
         when(taskMapper.mapToTaskDto(service.getTask(1L).orElseThrow(TaskNotFoundException::new))).thenReturn(taskDto);
 
         //When&Then
-        mockMvc.perform(get("/v1/task/getTask").param("taskId", "1").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/tasks/{taskId}", "1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.title", is("Test Task")));
@@ -77,7 +77,7 @@ public class TaskControllerTest {
 
         //When&Then
         service.deleteTask(1L);
-        mockMvc.perform(delete("/v1/task/deleteTask").param("taskId", "1").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete("/v1/tasks/{taskId}", "1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
@@ -94,7 +94,7 @@ public class TaskControllerTest {
         String jsonContent = gson.toJson(taskDto);
 
         //When&Then
-        mockMvc.perform(put("/v1/task/updateTask").content(jsonContent).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(put("/v1/tasks").content(jsonContent).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.title", is("Test Task")));
@@ -109,7 +109,7 @@ public class TaskControllerTest {
 
         //When&Then
         service.saveTask(taskMapper.mapToTask(taskDto));
-        mockMvc.perform(post("/v1/task/createTask").content(jsonContent).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(post("/v1/tasks").content(jsonContent).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
